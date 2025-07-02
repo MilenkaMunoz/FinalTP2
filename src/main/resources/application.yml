@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    url: jdbc:oracle:thin:@tienda_rosita_high?TNS_ADMIN=src/main/resources/wallet_tienda_rosita
+    username: tienda_rosita
+    password: soyTiendaDB2025
+    driver-class-name: oracle.jdbc.OracleDriver
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    database-platform: org.hibernate.dialect.OracleDialect
+

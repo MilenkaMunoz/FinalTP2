@@ -1,0 +1,23 @@
+<div class="container mt-4">
+  <h2>Ventas Registradas</h2>
+  <a routerLink="/sales/form" class="btn btn-primary mb-3">Nueva Venta</a>
+  <table class="table table-bordered table-hover">
+    <thead class="table-light">
+      <tr>
+        <th>Código</th><th>Cliente</th><th>Pago</th><th>Estado</th><th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let s of sales">
+        <td>{{ s.saleCode }}</td>
+        <td>{{ s.clientName }}</td>
+        <td>{{ s.paymentMethod }}</td>
+        <td>{{ s.status }}</td>
+        <td>
+          <a [routerLink]="['/sales/form', s.saleId]" class="btn btn-sm btn-warning">Editar</a>
+          <button class="btn btn-sm btn-danger" (click)="deleteSale(s.saleId!)">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

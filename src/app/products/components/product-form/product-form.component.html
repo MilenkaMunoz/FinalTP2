@@ -1,0 +1,17 @@
+<div class="container mt-4">
+  <h2>{{ isEdit ? 'Editar Producto' : 'Nuevo Producto' }}</h2>
+  <form (ngSubmit)="onSubmit()">
+    <input class="form-control mb-2" placeholder="Código" [(ngModel)]="product.productCode" name="productCode" required />
+    <input class="form-control mb-2" placeholder="Nombre" [(ngModel)]="product.productName" name="productName" required />
+    <textarea class="form-control mb-2" placeholder="Descripción" [(ngModel)]="product.description" name="description"></textarea>
+    <input type="number" class="form-control mb-2" placeholder="Precio Compra" [(ngModel)]="product.purchasePrice" name="purchasePrice" />
+    <input type="number" class="form-control mb-2" placeholder="Precio Venta" [(ngModel)]="product.salePrice" name="salePrice" />
+    <input type="number" class="form-control mb-2" placeholder="Stock" [(ngModel)]="product.stock" name="stock" />
+    <input class="form-control mb-2" placeholder="Categoría" [(ngModel)]="product.category" name="category" />
+    <select class="form-control mb-3" [(ngModel)]="product.status" name="status">
+      <option>Activo</option>
+      <option>Inactivo</option>
+    </select>
+    <button class="btn btn-success">Guardar</button>
+  </form>
+</div>

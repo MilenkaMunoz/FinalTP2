@@ -1,0 +1,29 @@
+<div class="container mt-4">
+  <h2>{{ isEdit ? 'Editar Venta' : 'Registrar Venta' }}</h2>
+  <form (ngSubmit)="onSubmit()">
+    <input class="form-control mb-2" placeholder="Código de Venta" [(ngModel)]="sale.saleCode" name="saleCode" required />
+    <input class="form-control mb-2" placeholder="ID Cliente" [(ngModel)]="sale.clientId" name="clientId" />
+    <input class="form-control mb-2" placeholder="Nombre Cliente" [(ngModel)]="sale.clientName" name="clientName" />
+    <input class="form-control mb-2" placeholder="Forma de Pago" [(ngModel)]="sale.paymentMethod" name="paymentMethod" />
+    <textarea class="form-control mb-2" placeholder="Observaciones" [(ngModel)]="sale.remarks" name="remarks"></textarea>
+    <select class="form-control mb-3" [(ngModel)]="sale.status" name="status">
+      <option>Registrado</option>
+      <option>Pagado</option>
+      <option>Anulado</option>
+    </select>
+
+    <h5>Detalle de Productos</h5>
+    <button type="button" class="btn btn-secondary mb-2" (click)="addDetail()">Agregar Producto</button>
+
+    <div *ngFor="let d of sale.details; let i = index" class="border p-2 mb-2">
+      <input class="form-control mb-1" placeholder="ID Producto" [(ngModel)]="d.productId" name="productId{{i}}" />
+      <input class="form-control mb-1" placeholder="Nombre Producto" [(ngModel)]="d.productName" name="productName{{i}}" />
+      <input type="number" class="form-control mb-1" placeholder="Cantidad" [(ngModel)]="d.quantity" name="quantity{{i}}" (input)="updateTotal(d)" />
+      <input type="number" class="form-control mb-1" placeholder="Precio Unitario" [(ngModel)]="d.unitPrice" name="unitPrice{{i}}" (input)="updateTotal(d)" />
+      <input type="number" class="form-control mb-1" placeholder="Total" [value]="d.totalPrice" readonly />
+      <button type="button" class="btn btn-danger btn-sm" (click)="removeDetail(i)">Quitar</button>
+    </div>
+
+    <button class="btn btn-success mt-3">Guardar Venta</button>
+  </form>
+</div>

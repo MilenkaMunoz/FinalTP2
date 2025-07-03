@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class ProductService {
-  private apiUrl = 'https://obscure-space-broccoli-45r7v4v6vr93jxgg-8080.app.github.dev/app/products'; // Ajusta si es necesario
+  private apiUrl = 'https://obscure-space-broccoli-45r7v4v6vr93jxgg-8081.app.github.dev/app/products'; // Ajusta si es necesario
 
   constructor(private http: HttpClient) {}
 

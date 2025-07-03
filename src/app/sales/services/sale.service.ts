@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class SaleService {
-  private apiUrl = 'http://localhost:8080/api/sales';
+  private apiUrl = 'https://obscure-space-broccoli-45r7v4v6vr93jxgg-8081.app.github.dev/app/sales';
 
   constructor(private http: HttpClient) {}
 

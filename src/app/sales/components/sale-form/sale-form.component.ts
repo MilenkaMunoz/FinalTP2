@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { Sale } from '../../interfaces/sale.interface';
 import { SaleDetail } from '../../interfaces/sale-detail.interface';
 import { SaleService } from '../../services/sale.service';
@@ -6,6 +8,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-sale-form',
+  standalone: true,
+  imports: [CommonModule, FormsModule],
   templateUrl: './sale-form.component.html',
   styleUrls: ['./sale-form.component.css']
 })
@@ -23,9 +27,9 @@ export class SaleFormComponent implements OnInit {
   isEdit: boolean = false;
 
   constructor(
-    private saleService: SaleService,
+    public saleService: SaleService,
     private route: ActivatedRoute,
-    private router: Router
+    public router: Router
   ) {}
 
   ngOnInit(): void {
@@ -57,11 +61,11 @@ export class SaleFormComponent implements OnInit {
   onSubmit() {
     if (this.isEdit && this.sale.saleId) {
       this.saleService.update(this.sale.saleId, this.sale).subscribe(() => {
-        this.router.navigate(['/sales']);
+        this.router.navigate(['/dashboard/sales']);
       });
     } else {
       this.saleService.create(this.sale).subscribe(() => {
-        this.router.navigate(['/sales']);
+        this.router.navigate(['/dashboard/sales']);
       });
     }
   }

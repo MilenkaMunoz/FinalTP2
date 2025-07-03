@@ -1,29 +1,54 @@
-<div class="container mt-4">
+<div class="sale-form-container">
   <h2>{{ isEdit ? 'Editar Venta' : 'Registrar Venta' }}</h2>
-  <form (ngSubmit)="onSubmit()">
-    <input class="form-control mb-2" placeholder="Código de Venta" [(ngModel)]="sale.saleCode" name="saleCode" required />
-    <input class="form-control mb-2" placeholder="ID Cliente" [(ngModel)]="sale.clientId" name="clientId" />
-    <input class="form-control mb-2" placeholder="Nombre Cliente" [(ngModel)]="sale.clientName" name="clientName" />
-    <input class="form-control mb-2" placeholder="Forma de Pago" [(ngModel)]="sale.paymentMethod" name="paymentMethod" />
-    <textarea class="form-control mb-2" placeholder="Observaciones" [(ngModel)]="sale.remarks" name="remarks"></textarea>
-    <select class="form-control mb-3" [(ngModel)]="sale.status" name="status">
-      <option>Registrado</option>
-      <option>Pagado</option>
-      <option>Anulado</option>
-    </select>
-
-    <h5>Detalle de Productos</h5>
-    <button type="button" class="btn btn-secondary mb-2" (click)="addDetail()">Agregar Producto</button>
-
-    <div *ngFor="let d of sale.details; let i = index" class="border p-2 mb-2">
-      <input class="form-control mb-1" placeholder="ID Producto" [(ngModel)]="d.productId" name="productId{{i}}" />
-      <input class="form-control mb-1" placeholder="Nombre Producto" [(ngModel)]="d.productName" name="productName{{i}}" />
-      <input type="number" class="form-control mb-1" placeholder="Cantidad" [(ngModel)]="d.quantity" name="quantity{{i}}" (input)="updateTotal(d)" />
-      <input type="number" class="form-control mb-1" placeholder="Precio Unitario" [(ngModel)]="d.unitPrice" name="unitPrice{{i}}" (input)="updateTotal(d)" />
-      <input type="number" class="form-control mb-1" placeholder="Total" [value]="d.totalPrice" readonly />
-      <button type="button" class="btn btn-danger btn-sm" (click)="removeDetail(i)">Quitar</button>
+  <form (ngSubmit)="onSubmit()" #saleForm="ngForm">
+    <div class="form-row">
+      <label>Código:</label>
+      <input [(ngModel)]="sale.saleCode" name="saleCode" required />
     </div>
-
-    <button class="btn btn-success mt-3">Guardar Venta</button>
+    <div class="form-row">
+      <label>Cliente:</label>
+      <input [(ngModel)]="sale.clientName" name="clientName" required />
+    </div>
+    <div class="form-row">
+      <label>Método de Pago:</label>
+      <input [(ngModel)]="sale.paymentMethod" name="paymentMethod" required />
+    </div>
+    <div class="form-row">
+      <label>Observaciones:</label>
+      <input [(ngModel)]="sale.remarks" name="remarks" />
+    </div>
+    <div class="form-row">
+      <label>Estado:</label>
+      <select [(ngModel)]="sale.status" name="status">
+        <option value="Registrado">Registrado</option>
+        <option value="Anulado">Anulado</option>
+      </select>
+    </div>
+    <h3>Detalles</h3>
+    <table class="details-table">
+      <thead>
+        <tr>
+          <th>Producto</th>
+          <th>Cantidad</th>
+          <th>Precio Unitario</th>
+          <th>Total</th>
+          <th>Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let d of sale.details; let i = index">
+          <td><input [(ngModel)]="d.productName" name="productName{{i}}" required /></td>
+          <td><input type="number" [(ngModel)]="d.quantity" name="quantity{{i}}" (input)="updateTotal(d)" min="1" required /></td>
+          <td><input type="number" [(ngModel)]="d.unitPrice" name="unitPrice{{i}}" (input)="updateTotal(d)" min="0" required /></td>
+          <td>{{ d.totalPrice | number:'1.2-2' }}</td>
+          <td><button type="button" (click)="removeDetail(i)">Eliminar</button></td>
+        </tr>
+      </tbody>
+    </table>
+    <button type="button" (click)="addDetail()">Agregar Detalle</button>
+    <div class="form-actions">
+      <button type="submit" [disabled]="!saleForm.form.valid">{{ isEdit ? 'Actualizar' : 'Registrar' }}</button>
+      <button type="button" (click)="router.navigate(['/dashboard/sales'])">Cancelar</button>
+    </div>
   </form>
 </div>

@@ -1,0 +1,13 @@
+<div class="dashboard-container">
+  <aside class="sidebar">
+    <h2 class="brand">Tienda Rosita</h2>
+    <nav>
+      <a routerLink="/dashboard/customers" routerLinkActive="active"><mat-icon>group</mat-icon> Clientes</a>
+      <a routerLink="/dashboard/products" routerLinkActive="active"><mat-icon>inventory_2</mat-icon> Productos</a>
+      <a routerLink="/dashboard/sales" routerLinkActive="active"><mat-icon>point_of_sale</mat-icon> Ventas</a>
+    </nav>
+  </aside>
+  <main class="main-content">
+    <router-outlet></router-outlet>
+  </main>
+</div>

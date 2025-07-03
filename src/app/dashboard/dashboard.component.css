@@ -1,0 +1,69 @@
+.dashboard-container {
+  display: flex;
+  min-height: 100vh;
+  background: #fff0f6;
+}
+.sidebar {
+  width: 260px;
+  background: linear-gradient(180deg, #f8bbd0 80%, #fff0f6 100%);
+  color: #ad1457;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 1rem 1rem 1rem;
+  box-shadow: 2px 0 8px #f8bbd0;
+}
+.brand {
+  font-size: 2.1rem;
+  font-weight: bold;
+  margin-bottom: 2.5rem;
+  color: #ad1457;
+  letter-spacing: 1px;
+}
+.sidebar nav {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+}
+.sidebar a {
+  color: #ad1457;
+  text-decoration: none;
+  font-size: 1.15rem;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.8rem 1.2rem;
+  border-radius: 8px;
+  transition: background 0.2s, color 0.2s;
+  font-weight: 500;
+}
+.sidebar a.active, .sidebar a:hover {
+  background: #ad1457;
+  color: #fff;
+}
+.main-content {
+  flex: 1;
+  background: #fff0f6;
+  padding: 2.5rem 3rem;
+  min-height: 100vh;
+  border-radius: 18px;
+  margin: 1.5rem 2rem 1.5rem 0;
+  box-shadow: 0 2px 16px #f8bbd0;
+}
+@media (max-width: 900px) {
+  .dashboard-container {
+    flex-direction: column;
+  }
+  .sidebar {
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 1rem 0;
+  }
+  .main-content {
+    margin: 0;
+    padding: 1rem;
+    border-radius: 0;
+  }
+}

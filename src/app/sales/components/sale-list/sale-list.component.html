@@ -1,6 +1,6 @@
 <div class="container mt-4">
   <h2>Ventas Registradas</h2>
-  <a routerLink="/sales/form" class="btn btn-primary mb-3">Nueva Venta</a>
+  <a routerLink="/dashboard/sales/form" class="btn btn-primary mb-3">Nueva Venta</a>
   <table class="table table-bordered table-hover">
     <thead class="table-light">
       <tr>
@@ -14,7 +14,8 @@
         <td>{{ s.paymentMethod }}</td>
         <td>{{ s.status }}</td>
         <td>
-          <a [routerLink]="['/sales/form', s.saleId]" class="btn btn-sm btn-warning">Editar</a>
+          <a [routerLink]="['/dashboard/sales/form', s.saleId]" class="btn btn-sm btn-warning">Editar</a>
+          <button class="btn btn-sm btn-info" (click)="viewDetail(s.saleId!)">Ver Detalle</button>
           <button class="btn btn-sm btn-danger" (click)="deleteSale(s.saleId!)">Eliminar</button>
         </td>
       </tr>

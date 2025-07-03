@@ -1,10 +1,14 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { Product } from '../../interfaces/product.interface';
 import { ProductService } from '../../services/product.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-product-form',
+  standalone: true,
+  imports: [CommonModule, FormsModule],
   templateUrl: './product-form.component.html',
   styleUrls: ['./product-form.component.css']
 })
@@ -39,11 +43,11 @@ export class ProductFormComponent implements OnInit {
   onSubmit() {
     if (this.isEdit && this.product.productId) {
       this.productService.update(this.product.productId, this.product).subscribe(() => {
-        this.router.navigate(['/products']);
+        this.router.navigate(['/dashboard/products']);
       });
     } else {
       this.productService.create(this.product).subscribe(() => {
-        this.router.navigate(['/products']);
+        this.router.navigate(['/dashboard/products']);
       });
     }
   }

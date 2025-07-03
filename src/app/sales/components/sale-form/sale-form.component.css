@@ -1,0 +1,63 @@
+.sale-form-container {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px #f8bbd0;
+  padding: 2rem 2.5rem;
+  max-width: 700px;
+  margin: 2rem auto;
+}
+.sale-form-container h2 {
+  color: #ad1457;
+  margin-bottom: 1.5rem;
+}
+.form-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  gap: 1rem;
+}
+.form-row label {
+  width: 140px;
+  font-weight: 500;
+  color: #ad1457;
+}
+.form-row input, .form-row select {
+  flex: 1;
+  padding: 0.5rem;
+  border-radius: 6px;
+  border: 1px solid #f8bbd0;
+  background: #fff0f6;
+}
+.details-table {
+  width: 100%;
+  margin-bottom: 1rem;
+  border-collapse: collapse;
+}
+.details-table th, .details-table td {
+  border: 1px solid #f8bbd0;
+  padding: 0.5rem;
+  text-align: center;
+}
+.details-table th {
+  background: #f8bbd0;
+  color: #ad1457;
+}
+.form-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  margin-top: 1.5rem;
+}
+button {
+  background: #ad1457;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 1.2rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+button:hover {
+  background: #f06292;
+}

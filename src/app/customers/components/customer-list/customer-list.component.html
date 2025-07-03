@@ -1,6 +1,6 @@
 <div class="container mt-4">
   <h2>Listado de Clientes</h2>
-  <a routerLink="/form" class="btn btn-primary mb-3">Agregar Cliente</a>
+  <a routerLink="/dashboard/customers/form" class="btn btn-primary mb-3">Agregar Cliente</a>
   <table class="table table-striped">
     <thead>
       <tr>
@@ -14,7 +14,7 @@
         <td>{{ customer.email }}</td>
         <td>{{ customer.phone }}</td>
         <td>
-          <a [routerLink]="['/form', customer.clientId]" class="btn btn-sm btn-warning">Editar</a>
+          <a [routerLink]="['/dashboard/customers/form', customer.clientId]" class="btn btn-sm btn-warning">Editar</a>
           <button class="btn btn-sm btn-danger" (click)="deleteCustomer(customer.clientId!)">Eliminar</button>
         </td>
       </tr>

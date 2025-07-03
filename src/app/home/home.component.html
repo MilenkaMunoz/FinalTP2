@@ -1,1 +1,29 @@
-<p>home works!</p>
+<div class="container">
+  <h2>Actor List</h2>
+  <table class="actor-table">
+    <thead>
+      <tr>
+        <th>Action</th>
+        <th>Actor ID</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Last Update</th>
+        <th>Film</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let actor of actors">
+        <td>
+          <button class="btn btn-view" (click)="view(actor)">👁</button>
+          <button class="btn btn-edit" (click)="edit(actor)">✏️</button>
+          <button class="btn btn-delete" (click)="delete(actor)">🗑</button>
+        </td>
+        <td>{{ actor.id }}</td>
+        <td>{{ actor.firstName }}</td>
+        <td>{{ actor.lastName }}</td>
+        <td>{{ actor.lastUpdate }}</td>
+        <td>{{ actor.filmCount }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

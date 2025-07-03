@@ -1,0 +1,25 @@
+<div class="sale-detail-container" *ngIf="sale">
+  <h2>Detalle de Venta</h2>
+  <div><b>Código:</b> {{ sale.saleCode }}</div>
+  <div><b>Cliente:</b> {{ sale.clientName }}</div>
+  <div><b>Método de Pago:</b> {{ sale.paymentMethod }}</div>
+  <div><b>Estado:</b> {{ sale.status }}</div>
+  <div><b>Observaciones:</b> {{ sale.remarks }}</div>
+  <h3>Productos</h3>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Producto</th><th>Cantidad</th><th>Precio Unitario</th><th>Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let d of sale.details">
+        <td>{{ d.productName }}</td>
+        <td>{{ d.quantity }}</td>
+        <td>{{ d.unitPrice }}</td>
+        <td>{{ d.totalPrice }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <button class="btn btn-secondary" (click)="router.navigate(['/dashboard/sales'])">Volver</button>
+</div>

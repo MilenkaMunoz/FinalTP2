@@ -1,0 +1,193 @@
+/* Contenedor principal del formulario */
+.shopping-form-container {
+  max-width: 700px; /* Un poco más ancho para comodidad */
+  margin: 50px auto; /* Centrado */
+  padding: 40px; /* Aumenta el espacio interno */
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+}
+
+/* Título del formulario */
+h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 26px; /* Título más grande */
+  color: #333;
+  font-weight: bold;
+}
+
+/* Estilos para cada grupo de formulario */
+.form-group {
+  margin-bottom: 25px; /* Aumentamos el espacio entre campos */
+}
+
+/* Estilo de las etiquetas */
+.form-group label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 600;
+  color: #555;
+}
+
+/* Estilos para inputs y selects */
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 14px; /* Aumento el padding para mayor comodidad */
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+/* Estilo al hacer focus */
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #ffab00;
+  box-shadow: 0 0 5px rgba(255, 171, 0, 0.5);
+}
+
+/* Estilos para los botones */
+.form-actions {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+  justify-content: flex-start;
+}
+
+.btn-primary,
+.btn-secondary,
+.btn-danger {
+  padding: 14px 28px;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-primary {
+  background-color: #ffab00;
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background-color: #e69900;
+}
+
+.btn-secondary {
+  background-color: #ccc;
+  color: #333;
+}
+
+.btn-secondary:hover {
+  background-color: #b3b3b3;
+}
+
+.btn-danger {
+  background-color: #d9534f;
+  color: white;
+}
+
+.btn-danger:hover {
+  background-color: #c12d2a;
+}
+
+/* Estilos para el botón de exportar PDF */
+.btn-info {
+  background-color: #17a2b8;
+  color: white;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.btn-info:hover {
+  background-color: #138496;
+}
+
+.btn-info i {
+  font-size: 16px;
+}
+
+/* Estilos para los detalles de compra (productos) */
+.detail-form {
+  margin-bottom: 30px;
+}
+
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px; /* Espacio entre columnas */
+  margin-bottom: 20px; /* Separación entre filas */
+  background-color: #f9f9f9; /* Fondo gris claro para los detalles */
+  padding: 10px; /* Espaciado interno */
+  border-radius: 6px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra para dar un efecto de profundidad */
+}
+
+.col-md-4 {
+  flex: 1 1 30%; /* Hacemos las columnas de productos un poco más anchas */
+}
+
+.col-md-2 {
+  flex: 1 1 15%;
+}
+
+.col-md-2 input {
+  margin-top: 8px; /* Separación de inputs */
+}
+
+.col-md-2 button {
+  padding: 10px 15px; /* Botón más grande */
+  font-size: 14px;
+  background-color: #d9534f;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.col-md-2 button:hover {
+  background-color: #c12d2a;
+}
+
+.form-row label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.form-group input:disabled {
+  background-color: #e9ecef;
+  color: #6c757d;
+  cursor: not-allowed;
+}
+
+/* Estilo del botón de agregar detalles */
+.btn-primary {
+  padding: 14px 28px;
+  font-size: 16px;
+  background-color: #ffab00;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #e69900;
+}
+
+.invalid-feedback {
+  display: block;
+  color: red;
+  font-size: 12px;
+}
+
+.shopping-form-container .form-group {
+  margin-bottom: 20px;
+}

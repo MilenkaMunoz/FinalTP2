@@ -1,0 +1,135 @@
+<div class="product-form-container">
+  <h2>{{ isEditMode ? 'Editar Producto' : 'Crear Producto' }}</h2>
+
+  <form (ngSubmit)="submitForm(productForm)" #productForm="ngForm">
+    <!-- Nombre del producto -->
+    <div class="form-group"
+      [ngClass]="{ 'has-error': productName.invalid && (productName.touched || productName.dirty) }">
+      <label for="productName">Nombre</label>
+      <input id="productName" [(ngModel)]="product.productName" name="productName" required minlength="3"
+        pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$" #productName="ngModel" placeholder="Ingrese el nombre del producto"
+        class="input-field" />
+      <div *ngIf="productName.invalid && (productName.touched || productName.dirty)" class="error-message">
+        <div *ngIf="productName.errors?.['required']">El nombre del producto es obligatorio.</div>
+        <div *ngIf="productName.errors?.['minlength']">El nombre debe tener al menos 3 caracteres.</div>
+        <div *ngIf="productName.errors?.['pattern']">El nombre solo puede contener letras y espacios.</div>
+      </div>
+    </div>
+
+    <!-- Descripción del producto -->
+    <div class="form-group"
+      [ngClass]="{ 'has-error': description.invalid && (description.touched || description.dirty) }">
+      <label for="description">Descripción</label>
+      <textarea id="description" [(ngModel)]="product.description" name="description" required minlength="10"
+        pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$" #description="ngModel" placeholder="Ingrese la descripción del producto"
+        class="input-field"></textarea>
+      <div *ngIf="description.invalid && (description.touched || description.dirty)" class="error-message">
+        <div *ngIf="description.errors?.['required']">La descripción es obligatoria.</div>
+        <div *ngIf="description.errors?.['minlength']">La descripción debe tener al menos 10 caracteres.</div>
+        <div *ngIf="description.errors?.['pattern']">La descripción solo puede contener letras y espacios.</div>
+      </div>
+    </div>
+
+    <!-- Precio del producto -->
+    <div class="form-group"
+      [ngClass]="{ 'has-error': price.invalid && (price.touched || price.dirty) || isPriceInvalid }">
+      <label for="price">Precio</label>
+      <input id="price" type="text" [(ngModel)]="priceInput" name="price" required pattern="^\d+(\.\d{1,2})?$"
+        #price="ngModel" (input)="onPriceInput($event)" (blur)="validatePrice()" placeholder="0.00"
+        class="input-field" />
+      <!-- Mensajes de error -->
+      <div *ngIf="price.invalid && (price.touched || price.dirty)" class="error-message">
+        <div *ngIf="price.errors?.['required']">El precio es obligatorio.</div>
+        <div *ngIf="price.errors?.['pattern']">El precio debe tener un formato válido (ej. 12.34).</div>
+      </div>
+      <div *ngIf="isPriceInvalid" class="error-message">El precio debe ser mayor que 0.00.</div>
+    </div>
+
+
+    <!-- Stock del producto -->
+    <div class="form-group" [ngClass]="{ 'has-error': stock.invalid && (stock.touched || stock.dirty) }">
+      <label for="stock">Stock</label>
+      <input id="stock" type="number" min="1" [(ngModel)]="product.stock" name="stock" required #stock="ngModel"
+        placeholder="Ingrese el stock disponible" class="input-field" />
+      <div *ngIf="stock.invalid && (stock.touched || stock.dirty)" class="error-message">
+        <div *ngIf="stock.errors?.['required']">El stock es obligatorio.</div>
+        <div *ngIf="stock.errors?.['min']">El stock debe ser al menos 1.</div>
+      </div>
+    </div>
+
+    <!-- Categoría -->
+    <div class="form-group" [ngClass]="{ 'has-error': categoryInvalid && (categoryTouched || productForm.submitted) }">
+      <label for="category">Categoría</label>
+      <select id="category" [(ngModel)]="product.category" name="category" (ngModelChange)="validateCategory()"
+        (blur)="markCategoryTouched()" class="input-field" #categoryField="ngModel">
+        <option [ngValue]="undefined" disabled>Seleccione una categoría</option>
+        <option *ngFor="let category of categories" [ngValue]="category">
+          {{ category.categoryName }}
+        </option>
+      </select>
+      <div *ngIf="categoryInvalid && (categoryTouched || productForm.submitted)" class="error-message">
+        Debes seleccionar una categoría.
+      </div>
+    </div>
+
+
+
+    <!-- Fecha de Fabricación -->
+    <div class="form-group" [ngClass]="{ 'has-error': manufactureDate.invalid && manufactureDate.touched }">
+      <label for="manufactureDate">Fecha de Fabricación</label>
+      <input id="manufactureDate" type="date" [(ngModel)]="product.manufactureDate" name="manufactureDate" required
+        #manufactureDate="ngModel" class="input-field" />
+      <div *ngIf="manufactureDate.invalid && manufactureDate.touched" class="error-message">
+        <div *ngIf="manufactureDate.errors?.['required']">La fecha de fabricación es obligatoria.</div>
+      </div>
+    </div>
+
+    <!-- Fecha de Caducidad -->
+    <div class="form-group" [ngClass]="{ 'has-error': expirationDate.invalid && expirationDate.touched }">
+      <label for="expirationDate">Fecha de Caducidad</label>
+      <input id="expirationDate" type="date" [(ngModel)]="product.expirationDate" name="expirationDate" required
+        #expirationDate="ngModel" class="input-field" />
+      <div *ngIf="expirationDate.invalid && expirationDate.touched" class="error-message">
+        <div *ngIf="expirationDate.errors?.['required']">La fecha de caducidad es obligatoria.</div>
+      </div>
+      <div *ngIf="product.expirationDate && product.manufactureDate && product.expirationDate < product.manufactureDate"
+        class="error-message">
+        La fecha de caducidad no puede ser anterior a la fecha de fabricación.
+      </div>
+    </div>
+
+    <!-- Código del producto -->
+    <div class="form-group" [ngClass]="{ 'has-error': productCode.invalid && (productCode.touched || productCode.dirty) }">
+      <label for="productCode">Código</label>
+      <input id="productCode" [(ngModel)]="product.productCode" name="productCode" required minlength="3"
+        #productCode="ngModel" placeholder="Ingrese el código del producto" class="input-field" />
+      <div *ngIf="productCode.invalid && (productCode.touched || productCode.dirty)" class="error-message">
+        <div *ngIf="productCode.errors?.['required']">El código del producto es obligatorio.</div>
+        <div *ngIf="productCode.errors?.['minlength']">El código debe tener al menos 3 caracteres.</div>
+      </div>
+    </div>
+
+    <!-- Precio de compra -->
+    <div class="form-group" [ngClass]="{ 'has-error': purchasePrice.invalid && (purchasePrice.touched || purchasePrice.dirty) }">
+      <label for="purchasePrice">Precio de compra</label>
+      <input id="purchasePrice" type="number" step="0.01" min="0" [(ngModel)]="product.purchasePrice" name="purchasePrice" required
+        #purchasePrice="ngModel" placeholder="0.00" class="input-field" />
+      <div *ngIf="purchasePrice.invalid && (purchasePrice.touched || purchasePrice.dirty)" class="error-message">
+        <div *ngIf="purchasePrice.errors?.['required']">El precio de compra es obligatorio.</div>
+        <div *ngIf="purchasePrice.errors?.['min']">El precio de compra debe ser mayor o igual a 0.</div>
+      </div>
+    </div>
+
+    <!-- Botones de acción -->
+    <div class="form-actions">
+      <button
+        type="submit"
+        class="btn-primary"
+        [disabled]="productForm.invalid || isPriceInvalid || categoryInvalid"
+      >
+        {{ isEditMode ? 'Actualizar' : 'Crear' }}
+      </button>
+      <button type="button" class="btn-secondary" (click)="cancel()">Cancelar</button>
+    </div>    
+  </form>
+</div>

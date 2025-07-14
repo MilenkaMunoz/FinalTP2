@@ -1,0 +1,48 @@
+.card {
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.form-control:read-only {
+  background-color: #e9ecef;
+}
+
+.btn-sm {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+}
+
+.invalid-feedback {
+  display: block;
+  width: 100%;
+  margin-top: 0.25rem;
+  font-size: 80%;
+  color: #dc3545;
+}
+
+.form-control.ng-invalid.ng-touched,
+.form-select.ng-invalid.ng-touched {
+  border-color: #dc3545;
+}
+
+.form-control.ng-valid.ng-touched,
+.form-select.ng-valid.ng-touched {
+  border-color: #198754;
+}
+
+.card-header {
+  background-color: #f8f9fa;
+}
+
+.btn-group {
+  gap: 0.5rem;
+}
+
+.row {
+  align-items: center;
+}
+
+/* Estilos para los campos de solo lectura */
+input[readonly] {
+  background-color: #e9ecef;
+  cursor: not-allowed;
+}

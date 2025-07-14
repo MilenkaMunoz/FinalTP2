@@ -1,0 +1,123 @@
+<div class="dashboard-container">
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="user-profile">
+      <img src="assets/ah.jpg" alt="User Image" class="profile-img">
+      <h3>Edgar Junes</h3>
+      <span>Admin</span>
+    </div>
+    <nav class="menu">
+      <a routerLink="/inicio" class="menu-item">
+        <i class="icon-home"></i> Inicio
+      </a>
+      <a routerLink="/categorias" class="menu-item" routerLinkActive="active">
+        <i class="icon-category"></i> Categorías
+      </a>
+      <a routerLink="/productos" class="menu-item active">
+        <i class="icon-products"></i> Productos
+      </a>
+      <a routerLink="/clientes" class="menu-item">
+        <i class="icon-clients"></i> Clientes
+      </a>
+      <a routerLink="/inventarios" class="menu-item">
+        <i class="icon-inventory"></i> Inventarios
+      </a>
+      <a routerLink="/compras" class="menu-item">
+        <i class="icon-payment"></i> Pago
+      </a>
+      <a routerLink="/ordenes" class="menu-item" routerLinkActive="active">
+        <i class="fas fa-shopping-cart"></i> Órdenes
+      </a>
+      <a routerLink="/configuracion" class="menu-item">
+        <i class="icon-settings"></i> Configuración
+      </a>
+    </nav>
+    <button class="logout-button">Logout</button>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <header class="header">
+      <h2>Productos</h2>
+      <div class="actions-container">
+        <!-- Left section: Search bar and toggle -->
+        <div class="left-actions">
+          <div class="search-container">
+            <input
+              type="text"
+              placeholder="Buscar por nombre"
+              [(ngModel)]="searchText"
+              (input)="filterProducts()"
+              class="search-box"
+            />
+          </div>
+          <div class="toggle-container">
+            <label class="switch">
+              <input
+                type="checkbox"
+                [(ngModel)]="showActive"
+                (ngModelChange)="toggleProductView()"
+              />
+              <span class="slider round"></span>
+            </label>
+            <span class="toggle-label">
+              {{ showActive ? 'Listando Activos' : 'Listando Inactivos' }}
+            </span>
+          </div>
+        </div>
+
+        <!-- Right section: New Product button -->
+        <div class="right-actions">
+          <button class="export-button" (click)="exportToPDF()">
+            <i class="fas fa-file-pdf"></i> Exportar a PDF
+          </button>
+          <button class="export-button" (click)="exportToExcel()">
+            <i class="fas fa-file-excel"></i> Exportar a Excel
+          </button>
+          <button class="new-product-button" (click)="createNewProduct()">
+            <i class="fas fa-plus-circle"></i> + Nuevo Producto
+          </button>
+        </div>        
+      </div>
+    </header>
+
+    <div class="products-list">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Nombre</th>
+            <th>Categoría</th>
+            <th>Descripción</th>
+            <th>Precio</th>
+            <th>Precio Compra</th>
+            <th>Código</th>
+            <th>Stock</th>
+            <th>Fabricación</th>
+            <th>Caducidad</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let product of filteredProducts; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ product.productName }}</td>
+            <td>{{ product.category?.categoryName || 'Sin Categoría' }}</td>
+            <td>{{ product.description }}</td>
+            <td>{{ product.price | currency: 'PEN ' }}</td>
+            <td>{{ product.purchasePrice | currency: 'PEN ' }}</td>
+            <td>{{ product.productCode }}</td>
+            <td>{{ product.stock }}</td>
+            <td>{{ product.manufactureDate | date: 'dd/MM/yyyy' }}</td>
+            <td>{{ product.expirationDate | date: 'dd/MM/yyyy' }}</td>
+            <td>
+              <button (click)="editProduct(product)">✏️</button>
+              <button *ngIf="showActive" (click)="deleteProduct(product.id)">🗑️</button>
+              <button *ngIf="!showActive" (click)="activateProduct(product.id)">♻️</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

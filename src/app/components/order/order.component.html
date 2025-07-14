@@ -1,0 +1,103 @@
+<div class="dashboard-container">
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="user-profile">
+      <img src="assets/ah.jpg" alt="User Image" class="profile-img">
+      <h3>Edgar Junes</h3>
+      <span>Admin</span>
+    </div>
+    <nav class="menu">
+      <a routerLink="/inicio" class="menu-item">
+        <i class="icon-home"></i> Inicio
+      </a>
+      <a routerLink="/categorias" class="menu-item" routerLinkActive="active">
+        <i class="icon-category"></i> Categorías
+      </a>
+      <a routerLink="/productos" class="menu-item">
+        <i class="icon-products"></i> Productos
+      </a>
+      <a routerLink="/clientes" class="menu-item">
+        <i class="icon-clients"></i> Clientes
+      </a>
+      <a routerLink="/inventarios" class="menu-item">
+        <i class="icon-inventory"></i> Inventarios
+      </a>
+      <a routerLink="/compras" class="menu-item">
+        <i class="icon-payment"></i> Pago
+      </a>
+      <a routerLink="/ordenes" class="menu-item active" routerLinkActive="active">
+        <i class="fas fa-shopping-cart"></i> Órdenes
+      </a>
+      <a routerLink="/configuracion" class="menu-item">
+        <i class="icon-settings"></i> Configuración
+      </a>
+    </nav>
+    <button class="logout-button">Logout</button>
+  </div>
+
+  <!-- Contenido principal -->
+  <div class="main-content">
+    <div class="container mt-4">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Gestión de Órdenes</h2>
+        <button class="btn btn-primary" (click)="openCreateForm()">
+          <i class="fas fa-plus"></i> Nueva Orden
+        </button>
+      </div>
+
+      <!-- Tabla de órdenes -->
+      <div class="table-responsive" *ngIf="!showForm">
+        <table class="table table-striped table-hover">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Cliente</th>
+              <th>Dirección de Entrega</th>
+              <th>Fecha de Orden</th>
+              <th>Total</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let order of orders">
+              <td>{{ order.id }}</td>
+              <td>{{ order.client?.names }}</td>
+              <td>{{ order.deliveryAddress }}</td>
+              <td>{{ order.orderDate | date:'dd/MM/yyyy HH:mm' }}</td>
+              <td>{{ order.totalAmount | currency:'PEN':'symbol-narrow':'1.2-2' }}</td>
+              <td>
+                <span class="badge" [ngClass]="{
+                  'bg-success': order.status === 'Completed',
+                  'bg-warning': order.status === 'Pending',
+                  'bg-danger': order.status === 'Cancelled'
+                }">
+                  {{ order.status }}
+                </span>
+              </td>
+              <td>
+                <div class="btn-group">
+                  <button class="btn btn-sm btn-info me-1" (click)="editOrder(order)">
+                    <i class="fas fa-edit"></i>
+                  </button>
+                  <button class="btn btn-sm btn-danger" (click)="deactivateOrder(order.id!)">
+                    <i class="fas fa-trash"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Formulario de orden -->
+      <app-order-form
+        *ngIf="showForm"
+        [order]="selectedOrder"
+        [isEditing]="isEditing"
+        (orderSaved)="onOrderSaved()"
+        (cancelled)="closeForm()">
+      </app-order-form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,108 @@
+<div class="dashboard-container">
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="user-profile">
+      <img src="assets/ah.jpg" alt="User Image" class="profile-img">
+      <h3>Edgar Junes</h3>
+      <span>Admin</span>
+    </div>
+    <nav class="menu">
+      <a routerLink="/inicio" class="menu-item">
+        <i class="icon-home"></i> Inicio
+      </a>
+      <a routerLink="/categorias" class="menu-item" routerLinkActive="active">
+        <i class="icon-category"></i> Categorías
+      </a>
+      <a routerLink="/productos" class="menu-item">
+        <i class="icon-products"></i> Productos
+      </a>
+      <a routerLink="/clientes" class="menu-item active">
+        <i class="icon-clients"></i> Clientes
+      </a>
+      <a routerLink="/inventarios" class="menu-item">
+        <i class="icon-inventory"></i> Inventarios
+      </a>
+      <a routerLink="/shopping" class="menu-item">
+        <i class="icon-payment"></i> Pago
+      </a>
+      <a routerLink="/shopping-details" class="menu-item">
+        <i class="icon-receipt"></i> Boleta de Pago
+      </a>
+      <a routerLink="/configuracion" class="menu-item">
+        <i class="icon-settings"></i> Configuración
+      </a>
+    </nav>
+    <button class="logout-button">Logout</button>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <header class="header">
+      <div class="title-container">
+        <h2>Clientes</h2>
+      </div>
+      <div class="actions-container">
+        <!-- Left section: Search bar and toggle -->
+        <div class="left-actions">
+          <input
+            type="text"
+            placeholder="Buscar por nombre"
+            [(ngModel)]="searchText"
+            (input)="filterClients()"
+            class="search-box"
+          />
+          <div class="toggle-container">
+            <label class="switch">
+              <input
+                type="checkbox"
+                [(ngModel)]="showActive"
+                (ngModelChange)="toggleClientView()"
+              />
+              <span class="slider round"></span>
+            </label>
+            <span class="toggle-label">
+              {{ showActive ? 'Listando Activos' : 'Listando Inactivos' }}
+            </span>
+          </div>
+        </div>
+        <!-- Right section: New Client button -->
+        <div class="right-actions">
+          <button class="new-client-button" (click)="createNewClient()">
+            + Nuevo Cliente
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <div class="clients-list">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Nombre</th>
+            <th>Email</th>
+            <th>Teléfono</th>
+            <th>Dirección</th>
+            <th>DNI</th> 
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let client of filteredClients; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ client.names }}</td>
+            <td>{{ client.email }}</td>
+            <td>{{ client.cellPhone }}</td>
+            <td>{{ client.address }}</td>
+            <td>{{ client.dni }}</td>
+            <td>
+              <button (click)="editClient(client)">✏️</button>
+              <button *ngIf="showActive" (click)="deleteClient(client.id)">🗑️</button>
+              <button *ngIf="!showActive" (click)="activateClient(client.id)">♻️</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

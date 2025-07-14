@@ -1,0 +1,62 @@
+<div class="inventory-form-container">
+  <h2>{{ isEditMode ? 'Editar Inventario' : 'Crear Inventario' }}</h2>
+
+  <form [formGroup]="inventoryForm" (ngSubmit)="saveInventory()">
+    <!-- Producto -->
+    <div class="form-group" [ngClass]="{ 'has-error': inventoryForm.controls['product'].invalid && inventoryForm.controls['product'].touched }">
+      <label for="product">Producto</label>
+      <select id="product" formControlName="product" class="input-field" required>
+        <option value="null" disabled selected>Seleccione un producto</option>
+        <option *ngFor="let product of products" [ngValue]="product">{{ product.productName }}</option>
+      </select>
+      <div *ngIf="inventoryForm.controls['product'].invalid && inventoryForm.controls['product'].touched" class="error-message">
+        Seleccione un producto.
+      </div>
+    </div>
+
+    <!-- Cantidad -->
+    <div class="form-group" [ngClass]="{ 'has-error': inventoryForm.controls['movementQuantity'].invalid && inventoryForm.controls['movementQuantity'].touched }">
+      <label for="movementQuantity">Cantidad</label>
+      <input
+        id="movementQuantity"
+        type="number"
+        formControlName="movementQuantity"
+        class="input-field"
+        required
+        placeholder="Ingrese la cantidad"
+      />
+      <div *ngIf="inventoryForm.controls['movementQuantity'].invalid && inventoryForm.controls['movementQuantity'].touched" class="error-message">
+        La cantidad debe ser mayor a 0.
+      </div>
+    </div>
+
+    <!-- Tipo de Movimiento -->
+    <div class="form-group">
+      <label for="movementType">Tipo de Movimiento</label>
+      <select id="movementType" formControlName="movementType" class="input-field" required>
+        <option value="Ingreso">Ingreso</option>
+      </select>
+    </div>
+
+    <!-- Fecha de Movimiento -->
+    <div class="form-group" [ngClass]="{ 'has-error': inventoryForm.controls['movementDate'].invalid && inventoryForm.controls['movementDate'].touched }">
+      <label for="movementDate">Fecha de Movimiento</label>
+      <input
+        id="movementDate"
+        type="date"
+        formControlName="movementDate"
+        class="input-field"
+        required
+      />
+      <div *ngIf="inventoryForm.controls['movementDate'].invalid && inventoryForm.controls['movementDate'].touched" class="error-message">
+        Selecciona una fecha válida.
+      </div>
+    </div>
+
+    <!-- Botones -->
+    <div class="form-actions">
+      <button type="submit" class="btn-primary" [disabled]="inventoryForm.invalid">{{ isEditMode ? 'Actualizar' : 'Crear' }}</button>
+      <button type="button" class="btn-secondary" (click)="cancel()">Cancelar</button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,101 @@
+<div class="client-form-container">
+  <h2>{{ isEditMode ? 'Editar Cliente' : 'Crear Cliente' }}</h2>
+
+  <form (ngSubmit)="submitForm()" #clientForm="ngForm">
+    <!-- Nombre del cliente -->
+    <div class="form-group" [ngClass]="{ 'has-error': names.invalid && (names.touched || names.dirty) }">
+      <label for="names">Nombre</label>
+      <input
+        id="names"
+        [(ngModel)]="client.names"
+        name="names"
+        required
+        minlength="3"
+        pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$"
+        #names="ngModel"
+        (input)="names.control.markAsDirty()"
+        placeholder="Ingrese el nombre completo del cliente"
+        class="input-field"
+      />
+      <div *ngIf="names.invalid && (names.touched || names.dirty)" class="error-message">
+        <div *ngIf="names.errors?.['required']">El nombre es obligatorio.</div>
+        <div *ngIf="names.errors?.['minlength']">El nombre debe tener al menos 3 caracteres.</div>
+        <div *ngIf="names.errors?.['pattern']">El nombre solo puede contener letras y espacios.</div>
+      </div>
+    </div>
+
+    <!-- Email del cliente -->
+    <div class="form-group" [ngClass]="{ 'has-error': email.invalid && (email.touched || email.dirty) }">
+      <label for="email">Email</label>
+      <input
+        id="email"
+        type="email"
+        [(ngModel)]="client.email"
+        name="email"
+        required
+        pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+        #email="ngModel"
+        (input)="email.control.markAsDirty()"
+        placeholder="Ingrese el email del cliente"
+        class="input-field"
+      />
+      <div *ngIf="email.invalid && (email.touched || email.dirty)" class="error-message">
+        <div *ngIf="email.errors?.['required']">El email es obligatorio.</div>
+        <div *ngIf="email.errors?.['pattern']">El email debe tener un formato válido (ejemplo: usuario&#64;dominio.com).</div>
+      </div>
+    </div>
+
+    <!-- Teléfono del cliente -->
+    <div class="form-group" [ngClass]="{ 'has-error': cellPhone.invalid && (cellPhone.touched || cellPhone.dirty) }">
+      <label for="cellPhone">Teléfono</label>
+      <input
+        id="cellPhone"
+        type="text"
+        pattern="^[9]{1}[0-9]{8}$"
+        [(ngModel)]="client.cellPhone"
+        name="cellPhone"
+        required
+        #cellPhone="ngModel"
+        (input)="cellPhone.control.markAsDirty()"
+        placeholder="Ingrese el teléfono (ejemplo: 987654321)"
+        class="input-field"
+      />
+      <div *ngIf="cellPhone.invalid && (cellPhone.touched || cellPhone.dirty)" class="error-message">
+        <div *ngIf="cellPhone.errors?.['required']">El teléfono es obligatorio.</div>
+        <div *ngIf="cellPhone.errors?.['pattern']">El teléfono debe comenzar con 9 y tener 9 dígitos.</div>
+      </div>
+    </div>
+
+    <!-- Dirección del cliente -->
+    <div class="form-group" [ngClass]="{ 'has-error': address.invalid && (address.touched || address.dirty) }">
+      <label for="address">Dirección</label>
+      <input
+        id="address"
+        [(ngModel)]="client.address"
+        name="address"
+        required
+        minlength="5"
+        maxlength="100"
+        pattern="^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s.,#-]+$"
+        #address="ngModel"
+        (input)="address.control.markAsDirty()"
+        placeholder="Ingrese la dirección del cliente"
+        class="input-field"
+      />
+      <div *ngIf="address.invalid && (address.touched || address.dirty)" class="error-message">
+        <div *ngIf="address.errors?.['required']">La dirección es obligatoria.</div>
+        <div *ngIf="address.errors?.['minlength']">La dirección debe tener al menos 5 caracteres.</div>
+        <div *ngIf="address.errors?.['maxlength']">La dirección no debe superar los 100 caracteres.</div>
+        <div *ngIf="address.errors?.['pattern']">La dirección contiene caracteres inválidos.</div>
+      </div>
+    </div>
+
+    <!-- Botones de acción -->
+    <div class="form-actions">
+      <button type="submit" class="btn-primary" [disabled]="clientForm.invalid">
+        {{ isEditMode ? 'Actualizar' : 'Crear' }}
+      </button>
+      <button type="button" class="btn-secondary" (click)="cancel()">Cancelar</button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,55 @@
+<div class="category-form-container">
+  <h2>{{ isEditMode ? 'Editar Categoría' : 'Nueva Categoría' }}</h2>
+
+  <form #categoryForm="ngForm" (ngSubmit)="submitForm()">
+    <!-- Nombre de la categoría -->
+    <div class="form-group" [ngClass]="{ 'has-error': categoryName.invalid && (categoryName.touched || categoryName.dirty) }">
+      <label for="categoryName">Nombre</label>
+      <input
+        id="categoryName"
+        name="categoryName"
+        class="input-field"
+        placeholder="Ingrese el nombre de la categoría"
+        [(ngModel)]="category.categoryName"
+        #categoryName="ngModel"
+        required
+        minlength="3"
+        pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$"
+      />
+      <div *ngIf="categoryName.invalid && (categoryName.touched || categoryName.dirty)" class="error-message">
+        <div *ngIf="categoryName.errors?.['required']">El nombre es obligatorio.</div>
+        <div *ngIf="categoryName.errors?.['minlength']">El nombre debe tener al menos 3 caracteres.</div>
+        <div *ngIf="categoryName.errors?.['pattern']">El nombre solo puede contener letras y espacios.</div>
+      </div>
+    </div>
+
+    <!-- Descripción de la categoría -->
+    <div class="form-group" [ngClass]="{ 'has-error': description.invalid && (description.touched || description.dirty) }">
+      <label for="description">Descripción</label>
+      <textarea
+        id="description"
+        name="description"
+        class="input-field"
+        placeholder="Ingrese una descripción breve de la categoría"
+        [(ngModel)]="category.description"
+        #description="ngModel"
+        required
+        minlength="5"
+        maxlength="255"
+      ></textarea>
+      <div *ngIf="description.invalid && (description.touched || description.dirty)" class="error-message">
+        <div *ngIf="description.errors?.['required']">La descripción es obligatoria.</div>
+        <div *ngIf="description.errors?.['minlength']">La descripción debe tener al menos 5 caracteres.</div>
+        <div *ngIf="description.errors?.['maxlength']">La descripción no debe superar los 255 caracteres.</div>
+      </div>
+    </div>
+
+    <!-- Botones de acción -->
+    <div class="form-actions">
+      <button type="submit" class="btn-primary" [disabled]="categoryForm.invalid">
+        {{ isEditMode ? 'Actualizar' : 'Crear' }}
+      </button>
+      <button type="button" class="btn-secondary" (click)="cancel()">Cancelar</button>
+    </div>
+  </form>
+</div>

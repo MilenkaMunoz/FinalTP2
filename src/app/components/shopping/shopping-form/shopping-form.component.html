@@ -1,0 +1,76 @@
+<div class="shopping-form-container">
+  <h2>{{ isEditMode ? 'Editar Compra' : 'Crear Nueva Compra' }}</h2>
+
+  <form [formGroup]="shoppingForm" (ngSubmit)="saveShopping()">
+    <!-- Cliente y Fecha de Compra -->
+    <div class="form-group">
+      <label for="client">Cliente</label>
+      <select class="form-control" id="client" name="client" formControlName="client">
+        <option *ngFor="let client of clients" [ngValue]="client">{{ client.names }}</option>
+      </select>
+      <div *ngIf="shoppingForm.get('client')?.invalid && shoppingForm.get('client')?.touched" class="invalid-feedback">
+        Cliente es obligatorio.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="shoppingDate">Fecha de Compra</label>
+      <input type="date" class="form-control" id="shoppingDate" formControlName="shoppingDate">
+      <div *ngIf="shoppingForm.get('shoppingDate')?.invalid && shoppingForm.get('shoppingDate')?.touched" class="invalid-feedback">
+        La fecha de compra es obligatoria.
+      </div>
+    </div>
+
+    <!-- Detalles de la Compra -->
+    <div formGroupName="shoppingDetailsForm">
+      <div formArrayName="shoppingDetails">
+        <div *ngFor="let detail of shoppingDetails.controls; let i = index" [formGroupName]="i" class="detail-form">
+          <div class="form-group">
+            <label for="product-{{i}}">Producto</label>
+            <select class="form-control" id="product-{{i}}" formControlName="product" (change)="updateSubtotal(detail)">
+              <option *ngFor="let product of products" [ngValue]="product">{{ product.productName }}</option>
+            </select>
+            <div *ngIf="detail.get('product')?.invalid && detail.get('product')?.touched" class="invalid-feedback">
+              El producto es obligatorio.
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="quantity-{{i}}">Cantidad</label>
+            <input type="number" class="form-control" id="quantity-{{i}}" formControlName="quantity" (input)="updateSubtotal(detail)" min="1">
+            <div *ngIf="detail.get('quantity')?.invalid && detail.get('quantity')?.touched" class="invalid-feedback">
+              La cantidad es obligatoria y debe ser mayor que 0.
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="unitPrice-{{i}}">Precio Unitario</label>
+            <input type="number" class="form-control" id="unitPrice-{{i}}" formControlName="unitPrice" (input)="updateSubtotal(detail)" min="0.01" step="0.01">
+            <div *ngIf="detail.get('unitPrice')?.invalid && detail.get('unitPrice')?.touched" class="invalid-feedback">
+              El precio unitario es obligatorio y debe ser mayor que 0.
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="subtotal-{{i}}">Subtotal</label>
+            <input type="text" class="form-control" id="subtotal-{{i}}" [value]="detail.get('subtotal')?.value" disabled>
+          </div>
+
+          <button type="button" class="btn btn-danger" (click)="removeShoppingDetail(i)">Eliminar Detalle</button>
+        </div>
+      </div>
+      <button type="button" class="btn btn-primary" (click)="addShoppingDetail()">Agregar Detalle</button>
+    </div>
+
+    <!-- Total de la Compra -->
+    <div class="form-group">
+      <label for="total">Total</label>
+      <input type="text" class="form-control" id="total" [value]="shoppingForm.get('shoppingDetailsForm.total')?.value" disabled>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn btn-success" [disabled]="shoppingForm.invalid || shoppingDetails.invalid">Guardar Compra</button>
+      <button type="button" class="btn btn-secondary" (click)="cancel()">Cancelar</button>
+    </div>
+  </form>
+</div>

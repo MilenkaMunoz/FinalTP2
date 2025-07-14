@@ -1,0 +1,123 @@
+<form [formGroup]="orderForm" (ngSubmit)="onSubmit()">
+  <!-- Cliente -->
+  <div class="form-group">
+    <label for="clientId">Cliente:</label>
+    <select id="clientId" formControlName="clientId" class="form-control">
+      <option value="">Seleccione un cliente</option>
+      <option *ngFor="let client of clients" [value]="client.id">
+        {{client.names}}
+      </option>
+    </select>
+    <div *ngIf="orderForm.get('clientId')?.invalid && orderForm.get('clientId')?.touched" class="text-danger">
+      El cliente es requerido
+    </div>
+  </div>
+
+  <!-- Dirección de entrega -->
+  <div class="form-group">
+    <label for="deliveryAddress">Dirección de entrega:</label>
+    <input type="text" id="deliveryAddress" formControlName="deliveryAddress" class="form-control">
+    <div *ngIf="orderForm.get('deliveryAddress')?.invalid && orderForm.get('deliveryAddress')?.touched" class="text-danger">
+      La dirección de entrega es requerida
+    </div>
+  </div>
+
+  <!-- Fecha de orden -->
+  <div class="form-group">
+    <label for="orderDate">Fecha de orden:</label>
+    <input type="date" id="orderDate" formControlName="orderDate" class="form-control">
+    <div *ngIf="orderForm.get('orderDate')?.invalid && orderForm.get('orderDate')?.touched" class="text-danger">
+      La fecha de orden es requerida
+    </div>
+  </div>
+
+  <!-- Fecha de entrega -->
+  <div class="form-group">
+    <label for="deliveryDate">Fecha de entrega:</label>
+    <input type="date" id="deliveryDate" formControlName="deliveryDate" class="form-control">
+    <div *ngIf="orderForm.get('deliveryDate')?.invalid && orderForm.get('deliveryDate')?.touched" class="text-danger">
+      La fecha de entrega es requerida
+    </div>
+  </div>
+
+  <!-- Detalles de la orden -->
+  <div formArrayName="orderDetails">
+    <h3>Detalles de la orden</h3>
+    <button type="button" class="btn btn-primary mb-3" (click)="addOrderDetail()">Agregar producto</button>
+    
+    <div *ngFor="let detail of orderDetails.controls; let i=index" [formGroupName]="i" class="row mb-3">
+      <div class="col-md-4">
+        <label [for]="'product-'+i">Producto:</label>
+        <select [id]="'product-'+i" formControlName="productId" class="form-control">
+          <option value="">Seleccione un producto</option>
+          <option *ngFor="let product of products" [value]="product.id">
+            {{product.productName}} - ${{product.price}}
+          </option>
+        </select>
+      </div>
+      
+      <div class="col-md-2">
+        <label [for]="'quantity-'+i">Cantidad:</label>
+        <input [id]="'quantity-'+i" type="number" formControlName="quantity" class="form-control" min="1">
+      </div>
+      
+      <div class="col-md-2">
+        <label [for]="'price-'+i">Precio unitario:</label>
+        <input [id]="'price-'+i" type="number" formControlName="unitPrice" class="form-control" readonly>
+      </div>
+      
+      <div class="col-md-2">
+        <label [for]="'subtotal-'+i">Subtotal:</label>
+        <input [id]="'subtotal-'+i" type="number" formControlName="subtotal" class="form-control" readonly>
+      </div>
+      
+      <div class="col-md-2">
+        <label>&nbsp;</label>
+        <button type="button" class="btn btn-danger form-control" (click)="removeOrderDetail(i)">
+          Eliminar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Total -->
+  <div class="row mt-3">
+    <div class="col-md-4 offset-md-8">
+      <div class="form-group">
+        <label for="total"><strong>Total:</strong></label>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">$</span>
+          </div>
+          <input id="total" 
+                 type="number" 
+                 formControlName="total" 
+                 class="form-control" 
+                 readonly 
+                 [value]="orderForm.get('total')?.value || 0">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Estado -->
+  <div class="form-group mt-3">
+    <label for="status">Estado:</label>
+    <select id="status" formControlName="status" class="form-control">
+      <option value="Pending">Pendiente</option>
+      <option value="Processing">En proceso</option>
+      <option value="Completed">Completado</option>
+      <option value="Cancelled">Cancelado</option>
+    </select>
+  </div>
+
+  <!-- Botones -->
+  <div class="button-group mt-3">
+    <button type="submit" class="btn btn-primary me-2" [disabled]="orderForm.invalid">
+      {{ isEditing ? 'Actualizar' : 'Crear' }} Orden
+    </button>
+    <button type="button" class="btn btn-secondary" (click)="onCancel()">
+      Cancelar
+    </button>
+  </div>
+</form>
